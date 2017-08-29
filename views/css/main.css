@@ -1,0 +1,16 @@
+#body {
+    margin-top: 50px;
+    display: table;
+}
+.body {
+    margin-top: 50px;
+}
+#container-fluid {
+    margin-top: 50px;
+}
+
+@media {
+    .container-fluid {
+        margin-top: 50px;
+    }
+}

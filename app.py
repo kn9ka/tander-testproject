@@ -5,10 +5,20 @@ conn = sqlite3.connect('main.db')
 cursor = conn.cursor()
 
 # create tables if not exist
-sql = ''' CREATE TABLE IF NOT EXIST '''
+fd = open('script.sql', 'r')
+sqlScriptFile = fd.read()
+fd.close()
 
+sqlScript = sqlScriptFile.split(';')
+
+for command in sqlScript:
+    try:
+        result = cursor.execute(command)
+        
+    except sqlite3.OperationalError as msg:
+        print("Error: ", msg)
+        
 # main content
-
 
 conn.commit()
 conn.close()

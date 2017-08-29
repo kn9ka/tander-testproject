@@ -1,0 +1,92 @@
+<html>
+    <head>
+        <title>Hello User!</title>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport", content="width=device-width, initial-scale=1">
+
+        <script
+          src="https://code.jquery.com/jquery-3.2.1.min.js"
+          integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+          crossorigin="anonymous">
+        </script>
+        
+        <script>
+        
+        $(document).ready ( function () {
+            $('#targetInput').click(function () {
+                alert('submitted')
+                console.log('submitted')
+                var value = $('#targetInput2').serialize()
+                alert(value)
+                console.log(value)
+            })
+
+        })
+
+        </script>
+
+        
+        <link rel="stylesheet" 
+        href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" 
+        integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" 
+        crossorigin="anonymous">
+        
+        <style>
+            form {display: table;}
+            div .form-group {display: table-row;}
+            label {display: table-cell;}
+            input {display: table-cell;}
+        </style>
+
+    </head>
+    <body>
+        <div class="container-fluid" style="margin-top: 50px;">
+            <div class="row">
+                <div class="col-md-8 col-lg-9">
+                    <form id="targetInput2" method="post">
+            
+                        <div class="form-group">
+                            <label for="second_name">Фамилия: </label>
+                            <input type="text" id="second_name" name="second_name"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="first_name">Имя: </label>
+                            <input type="text" id="first_name" name="first_name"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="patronymic">Отчество: </label>
+                            <input type="text" id="patronymic" name="patronymic"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="region">Регион: </label>
+                            <input type="text" id="region" name="region"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="city">Город: </label>
+                            <input type="text" id="city" name="city" list="regionList"/>
+                            <datalist id="regionList">
+                                <option value="Краснодар">
+                                <option value="Ростов">   
+                            </datalist>
+                        </div>
+                        <div class="form-group">
+                            <label for="mobile">Контактный номер: </label>
+                            <input type="text" id="mobile" name="mobile"/>
+                        </div>    
+                        <div class="form-group">
+                            <label for="e-mail">E-mail: </label>
+                            <input type="text" id="e-mail" name="e-mail"/>
+                        </div>     
+                        <div class="form-group">
+                            <label for="comment">Комментарий: </label>
+                            <input type="text" id="comment" name="comment"/>
+                        </div>
+                        
+                    </form>
+                    <button id="targetInput" type="submit" class="btn btn-primary btn-lg"> Submit </button>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
