@@ -8,6 +8,18 @@ CREATE TABLE IF NOT EXISTS region (
     name TEXT UNIQUE NOT NULL
 );
 
+CREATE TABLE IF NOT EXISTS maindata (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    second_name TEXT,
+    first_name TEXT,
+    patronymic TEXT,
+    region INTEGER,
+    city INTEGER,
+    mobile TEXT,
+    email TEXT,
+    comment TEXT
+);
+
 INSERT OR IGNORE INTO city (name, id_region) VALUES 
     ('Краснодар', 1), 
     ('Кропоткин', 1),

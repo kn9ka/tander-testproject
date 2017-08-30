@@ -1,16 +1,4 @@
-#body {
-    margin-top: 50px;
-    display: table;
-}
-.body {
-    margin-top: 50px;
-}
-#container-fluid {
-    margin-top: 50px;
-}
-
-@media {
-    .container-fluid {
-        margin-top: 50px;
-    }
-}
+form {display: table; white-space:nowrap; width: 200px;}
+div .form-group {display: table-row; white-space:nowrap; width: 200px;}
+label {display: table-cell; white-space:nowrap;}
+input {display: table-cell; white-space:nowrap; width: 200px;}
