@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport", content="width=device-width, initial-scale=1">
+        <script
+          src="https://code.jquery.com/jquery-3.2.1.min.js"
+          integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+          crossorigin="anonymous">
+        </script>
+        <link rel="stylesheet" 
+        href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" 
+        integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" 
+        crossorigin="anonymous">
+        <script type="text/javascript">
+            $.ajax({
+                url: '/getAllRows',
+                type: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                success: function (data) {
+                    console.log(data)
+                    data.forEach(function (row) {
+                        $("#root > tbody:last-child").append(("<tr></tr>"))
+                        for (var i = 1; i< row.length; i++){
+                            $("#root > tbody:last-child").append($("<td></td>", {text: row[i]}))
+                            console.log(row[i])
+                        }
+                    })
+                }
+            })
+        </script>
+        <style type="text/css">
+            table {white-space: nowrap; width: auto;}
+            th {width: 200px;}
+            td {width: auto;}
+        </style>
+    </head>
+    <body>
+        {%include menu.html%}
+        <div class="container-fluid">
+            <div class="row">
+                <div  class="col-md-8 col-lg-9" style="margin-top: 50px;">
+                    <table id="root" border="1" cellpadding='0' cellspacing='0'>
+                        <tbody>
+                        <tr>
+                            <th> Фамилия </th>
+                            <th> Имя </th>
+                            <th> Отчество </th>
+                            <th> Регион </th>
+                            <th> Город </th>
+                            <th> Контактный номер </th>
+                            <th> E-Mail </th>
+                            <th> Комментарий </th>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

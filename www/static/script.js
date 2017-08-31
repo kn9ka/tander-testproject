@@ -12,6 +12,7 @@ $(document).ready ( function () {
         },
         success: function (data) {
             list = data
+            console.log(data)
             var regionlist = []
 
             for (var i = 0; i < data.length; i++) {
@@ -24,7 +25,17 @@ $(document).ready ( function () {
             })
         }
     })
+    
+    $.ajax({
+        url: "/getAllRows",
+        type: "GET",
+        headers: {'Content-Type': 'application/json'},
+        success: function (dataRow) {
+            console.log(dataRow)
+        }
+    })
 })
+
 function dataSubmit() {
     var dataForm = $("#dataForm").serializeArray()
     var hilight_css = {"border-color":"red"}
@@ -64,4 +75,3 @@ function onCityChange () {
         }
     }
 }
-    

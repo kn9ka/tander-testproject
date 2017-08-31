@@ -1,29 +1,38 @@
 #! /usr/bin/env python
 # -*- coding: UTF-8 -*-
 
-# Comments form
-
 import sqlite3
 import re
 import json
 import os
+import urllib.parse
 from string import Template
 
 from cgi import escape
-import urllib.parse
+from . import template
 
+def render(filename):
+    result = None
+    name = os.path.dirname(os.path.abspath(__file__))  + filename
+    with open(name, 'r') as f:
+        result = f.read()
+    return [result.encode('utf-8')]
+
+def index (environ, start_response):
+    # "/" mount
+    start_response('200 OK', [('Content-Type', 'text/html')])
+    result = render('/templates/index.html')
+    return result
 
 def css(environ, start_response):
      start_response('200 OK', [('Content-Type', 'text/css')])
-     css = open('www/static/main.css','r').read().encode('utf-8')
-     
-     return [css]
+     result = render('/static/main.css')
+     return result
      
 def js(environ, start_response):
     start_response('200 OK', [('Content-Type', 'text/html')])
-    js = open('www/static/script.js', 'r').read().encode('utf-8')
-    
-    return [js]
+    result = render('/static/script.js')
+    return result
     
 def submit(environ, start_response):
     start_response('200 OK', [('Content-Type', 'application/json')])
@@ -62,18 +71,15 @@ def city(environ, start_response):
     result = cursor.execute('''SELECT city.name, region.name FROM city LEFT JOIN region ON city.id_region=region.id;''')
     rows = result.fetchall()
     r = json.dumps(rows)
-
     return [bytes(r, 'utf-8')]
 
 def getAllRows(environ, start_response):
     start_response('200 OK', [('Content-Type', 'application/json')])
     conn = sqlite3.connect('main.db')
     cursor = conn.cursor()
-    
     result = cursor.execute("SELECT * FROM maindata;")
     rows = result.fetchall()
     r = json.dumps(rows)
-
     return [bytes(r, 'utf-8')]
     
 def getAboveFive(environ, start_response):
@@ -88,34 +94,22 @@ def getAboveFive(environ, start_response):
     return [bytes(r, 'utf-8')] 
 
 def commentForm(environ, start_response):
-    #This function will be mounted on "/comment"
-    
-    form = open('www/templates/entry.html', 'r').read().encode('utf-8')
     start_response('200 OK', [('Content-Type', 'text/html')])
+    result = render('/templates/entry.html')
     
-    return [form]
+    return result
 
 def viewForm(environ, start_response):
-    
-    form = open('www/templates/list.html', 'r').read().encode('utf-8')
     start_response('200 OK', [('Content-Type', 'text/html')])
-    
-    return [form]
+    result = render('/templates/list.html')
+
+    return result
 
 def statForm (environ, start_response):
-    
-    form = open('www/templates/stat.html', 'r').read().encode('utf-8')
     start_response('200 OK', [('Content-Type', 'text/html')])
-    
-    return [form]
-    
-def index (environ, start_response):
-    # "/" mount
-    
-    start_response('200 OK', [('Content-Type', 'text/html')])
-    html = open('www/templates/index.html', 'r').read().encode('utf-8')
-    
-    return [html]
+    result = render('/templates/stat.html')
+
+    return result
     
 def hello(environ, start_response):
     #Example route
@@ -131,7 +125,6 @@ def hello(environ, start_response):
     return [bytes('''Hello %(subject)s Hello %(subject)s! ''' % {'subject': subject}, 'utf-8')]
 
 def not_found(environ, start_response):
-    
     """Called if no URL matches."""
     start_response('404 NOT FOUND', [('Content-Type', 'text/plain')])
     
@@ -149,8 +142,8 @@ urls = [
     (r'city/?$', city),
     (r'getAllRows/?$', getAllRows),
     (r'submit/?$', submit),
-    (r'css/main.css', css),
-    (r'js/script.js', js)
+    (r'/main.css', css),
+    (r'/script.js', js)
 ]
 
 def application(environ, start_response):
@@ -169,22 +162,25 @@ def application(environ, start_response):
         if match is not None:
             environ['myapp.url_args'] = match.groups()
             return callback(environ, start_response)
+            
     return not_found(environ, start_response)
 
-if __name__ == '__main__':
-    
+def run(host, port):
+    # Python's bundled WSGI server
     try:
-        # Python's bundled WSGI server
         from wsgiref.simple_server import make_server
         
         # Instantiate the server
         httpd = make_server (
-            '', # The host name
-            8080, # A port number where to wait for the request
-            application # The application object name, in this case a function
+            host, # The host name
+            port, # A port number where to wait for the request
+            application # The application object name
         )
-        
+        print('Starting server on port: %s' % port)
         httpd.serve_forever()
         
     except KeyboardInterrupt:
-        print('Goodbye.')
+        print('Server stopped by keyinterupt')
+        
+    except BaseException as e:
+        print('Error during work: %s' % e)
