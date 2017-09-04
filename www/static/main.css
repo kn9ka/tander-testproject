@@ -1,4 +1,5 @@
-form {display: table; white-space:nowrap; width: 200px;}
-div .form-group {display: table-row; white-space:nowrap; width: 200px;}
+/*form {display: table; white-space:nowrap;}*/
+/*div .form-group {display: table-row; white-space:nowrap;}*/
 label {display: table-cell; white-space:nowrap;}
-input {display: table-cell; white-space:nowrap; width: 200px;}
+input {display: table-cell; white-space:nowrap;}
+table {white-space: nowrap;}

@@ -1,64 +1,81 @@
 <html>
-    <head>
-    <title>$title</title>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport", content="width=device-width, initial-scale=1">
-    <script
-      src="https://code.jquery.com/jquery-3.2.1.min.js"
-      integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-      crossorigin="anonymous">
-    </script>
-    <link rel="stylesheet" 
-    href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" 
-    integrity="sha384-/Y6pD6FV/Vv2HJnA6t+vslU6fwYXjCFtcEpHbNJ0lyAFsXTsjBbfaDjzALeQsN6M" 
-    crossorigin="anonymous">
-    <link rel="stylesheet" href="main.css"/>
-    <script type="text/javascript" src="script.js"></script>
-    </head>
+    {%include header.html%}
+    <script type="text/javascript"> appendLocations() </script>
     <body>
+        {%include menu.html%}
         <div class="container-fluid" style="margin-top: 50px;">
             <div class="row">
-                <div class="col-md-8 col-lg-9">
+                <div class="col-md-8 col-lg-10">
                     <form id="dataForm">
-            
-                        <div class="form-group">
-                            <label for="second_name">Фамилия: </label>
-                            <input type="textbox" id="second_name" name = "second_name"/>
+                        <div class="form-group row">
+                            <label class = "col-2 col-form-label" for="second_name">Фамилия: </label>
+                            <div class = "col-10">
+                                 <input type="text" id="second_name" class="form-control " name = "second_name"/>
+                                 <div class="invalid-feedback">
+                                     Введите Фамилию
+                                 </div>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="first_name">Имя: </label>
-                            <input type="text" id="first_name" name = "first_name" />
+                        <div class="form-group row">
+                            <label class = "col-2 col-form-label" for="first_name">Имя: </label>
+                            <div class = "col-10">
+                                <input type="text" id="first_name" class="form-control" name = "first_name" />
+                                 <div class="invalid-feedback">
+                                    Введите Имя
+                                 </div>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="patronymic">Отчество: </label>
-                            <input type="text" id="patronymic" name = "patronymic"/>
+                        <div class="form-group row">
+                            <label class = "col-2 col-form-label" for="patronymic">Отчество: </label>
+                            <div class = "col-10">
+                                <input type="text" id="patronymic"class="form-control"  name = "patronymic"/>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="region">Регион: </label>
-                            <input type="text" id="region" name="region" list="regionlist" onchange="onCityChange()"/>
-                            <datalist id="regionlist">
-                            </datalist>
+                        <div class="form-group row">
+                            <label class = "col-2 col-form-label" for="region">Регион: </label>
+                            <div class = "col-10">
+                                <select required id = "region" name = "region" class = "form-control" onchange="onCityChange()">
+                                    <option id = "default-value" selected> Выберите регион </option>
+                                </select>
+                                <div class="invalid-feedback"></div>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="city">Город: </label>
-                            <input type="text" id="city" name="city" list="citylist"/>
-                            <datalist id="citylist">
-                            </datalist>
+                        <div class="form-group row">
+                            <label class = "col-2 col-form-label" for="city">Город: </label>
+                            <div class = "col-10">
+                                <select required id = "city" name = "city" class="form-control">
+                                    <option id = "selected" selected> Выберите город </option>
+                                </select>
+                                <div class="invalid-feedback"></div>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label for="mobile">Контактный номер: </label>
-                            <input type="text" id="mobile" name="mobile"/>
+                        <div class="form-group row">
+                            <label class = "col-2 col-form-label" for="mobile">Контактный номер: </label>
+                            <div class = "col-10" >
+                                <input type="text" id="mobile" class="form-control phone-format"  name="mobile" placeholder="(***)-**-**"/>
+                                 <div class="invalid-feedback">
+                                     Пожалуйста заполните поле Мобильный телефон
+                                 </div>
+                            </div>
                         </div>    
-                        <div class="form-group">
-                            <label for="e-mail">E-mail: </label>
-                            <input type="email" id="email" name="email"/>
+                        <div class="form-group row">
+                            <label class = "col-2 col-form-label" for="e-mail">E-mail: </label>
+                            <div class = "col-10">
+                                <input type="email" id="email" class="form-control" name="email" placeholder="Enter email"/>
+                                 <div class="invalid-feedback">
+                                     Пожалуйста заполните поле Email
+                                 </div>
+                            </div>
                         </div>     
-                        <div class="form-group">
-                            <label for="comment">Комментарий: </label>
-                            <input type="text" id="comment" name="comment"/>
+                        <div class="form-group row">
+                            <label class = "col-2 col-form-label" for="comment">Комментарий: </label>
+                            <div class = "col-10">
+                                <textarea name = "comment" class="form-control" id="comment" rows="3"></textarea>
+                                 <div class="invalid-feedback">
+                                     Пожалуйста внесите комментарий
+                                 </div>
+                            </div>
                         </div>
-                        
                     </form>
                     <button id="targetInput" class="btn btn-primary btn-lg" onclick="dataSubmit()"> Submit </button>
                 </div>
