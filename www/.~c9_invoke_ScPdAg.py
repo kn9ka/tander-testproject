@@ -128,7 +128,7 @@ def getAllRows(environ, start_response):
     start_response('200 OK', [('Content-Type', 'application/json')])
     conn = sqlite3.connect('main.db')
     cursor = conn.cursor()
-    result = cursor.execute("SELECT * FROM maindata;")
+    result = cursor.execute("SELECT * cFROM maindata;")
     rows = result.fetchall()
     r = json.dumps(rows)
     
@@ -158,15 +158,15 @@ def statForm (environ, start_response):
 
     return result
 
-#загрузка коментов по регионам, где коментов > 5. Результатом запроса будут "Ростовская область: 6", "Краснодарская область: 7"
+#загрузка коментов по регионам
 def getCommentsByRegion(environ, start_response):
     start_response('200 OK', [('Content-Type', 'application/json')])
     if environ['REQUEST_METHOD'] == 'POST':
         
         conn = sqlite3.connect('main.db')
         cursor = conn.cursor()
-        result = cursor.execute("select maindata.region, count(*), region.id from maindata left join region on region.name = maindata.region group by region having count(*) > 5 order by region ;")
-        
+        result = cursor.execute("select maindata.region, count(*), region.id from maindata left join region on region.name = maindata.region group by region order by region;")
+
         rows = result.fetchall()
         r = [bytes(json.dumps(rows), 'utf-8')]
         
